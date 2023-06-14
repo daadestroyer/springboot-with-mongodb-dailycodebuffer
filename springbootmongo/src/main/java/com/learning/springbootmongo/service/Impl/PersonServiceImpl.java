@@ -30,4 +30,24 @@ public class PersonServiceImpl implements PersonService {
         Optional<Person> byId = personRepository.findById(id);
         return byId.get();
     }
+
+    @Override
+    public List<Person> getPersonFirstNameStartsWith(String name) {
+        return personRepository.findByFirstNameStartsWith(name);
+    }
+
+    @Override
+    public String deleteById(String id) {
+        Optional<Person> byId = personRepository.findById(id);
+        if (!byId.isPresent()) {
+            return "no user found with id " + id;
+        }
+        personRepository.deleteById(id);
+        return "User with id = " + id + " and name = " + byId.get().getFirstName() + "  deleted...";
+    }
+
+    @Override
+    public List<Person> getPersonByAge(int minage, int maxage) {
+        return personRepository.findByAgeBetween(minage,maxage);
+    }
 }
